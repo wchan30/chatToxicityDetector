@@ -115,7 +115,6 @@ def main():
     # Convert target to binary (0 if < 0.5, 1 if >= 0.5)
     df['target_binary'] = (df['target'] >= 0.5).astype(int)
     
-    # Print class distribution
     print("\nClass distribution:")
     print(df['target_binary'].value_counts(normalize=True))
     
@@ -123,7 +122,6 @@ def main():
     X = df['comment_text'].values
     y = df['target_binary'].values
     
-    # Split data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     # Initialize and train model
@@ -131,26 +129,11 @@ def main():
     print("\nTraining model...")
     detector.train(X_train, y_train)
     
-    # Evaluate
     print("\nEvaluating model...")
     detector.evaluate(X_test, y_test)
     
-    # Save model
     detector.save_model('toxicity_detector.pkl')
     print("\nModel saved as 'toxicity_detector.pkl'")
-    
-    # Split data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Initialize and train model
-    detector = ToxicityDetector()
-    detector.train(X_train, y_train)
-    
-    # Evaluate
-    detector.evaluate(X_test, y_test)
-    
-    # Save model
-    detector.save_model('toxicity_detector.pkl')
     
     # Test custom texts
     texts = [
